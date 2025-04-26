@@ -8,5 +8,6 @@ class MsPegawai extends Model
 {
     protected $table = 'ms_pegawai';
     protected $primaryKey = 'id_pegawai';
+    protected $keyType = 'string';
     protected $guarded = [];
 }
