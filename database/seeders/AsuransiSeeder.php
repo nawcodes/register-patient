@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AsuransiSeeder extends Seeder
 {
@@ -12,6 +13,15 @@ class AsuransiSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $faker = \Faker\Factory::create();
+
+        foreach (range(1, 10) as $i) {
+            DB::table('ms_asuransi')->insert([
+                'id_asuransi' => 'ASUR-' . $faker->unique()->randomNumber(8),
+                'nama_asuransi' => 'Asuransi ' . $faker->word,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }
