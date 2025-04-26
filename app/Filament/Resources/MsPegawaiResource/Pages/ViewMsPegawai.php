@@ -9,7 +9,7 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewMsPegawai extends ViewRecord
 {
     protected static string $resource = MsPegawaiResource::class;
-
+    protected static ?string $title = 'Detail Pegawai';
     protected function getHeaderActions(): array
     {
         return [

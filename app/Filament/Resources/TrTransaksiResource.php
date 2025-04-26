@@ -4,6 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TrTransaksiResource\Pages;
 use App\Filament\Resources\TrTransaksiResource\RelationManagers;
+use App\Models\MsPegawai;
+use App\Models\MsTindakan;
+use App\Models\TrRegistrasi;
 use App\Models\TrTransaksi;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -29,17 +32,21 @@ class TrTransaksiResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('id_registrasi')
-                    ->relationship('registrasi', 'id_registrasi')
+                    ->label('Registrasi')
+                    ->options(TrRegistrasi::all()->pluck('id_registrasi', 'id_registrasi'))
+                    ->searchable()
                     ->required(),
                 Forms\Components\Select::make('id_tindakan')
-                    ->relationship('tindakan', 'id_tindakan')
+                    ->label('Tindakan')
+                    ->options(MsTindakan::all()->pluck('nama_tindakan', 'id_tindakan'))
+                    ->searchable()
+                    ->multiple()
                     ->required(),
                 Forms\Components\Select::make('id_pegawai')
-                    ->relationship('pegawai', 'id_pegawai')
+                    ->label('Pegawai')
+                    ->options(MsPegawai::all()->pluck('nama_pegawai', 'id_pegawai'))
+                    ->searchable()
                     ->required(),
-                Forms\Components\TextInput::make('jml_tindakan')
-                    ->required(),
-
                 //
             ]);
     }
@@ -49,12 +56,14 @@ class TrTransaksiResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('pegawai.nama_pegawai')->label('Pegawai'),
-                TextColumn::make('jml_tindakan')->label('Jumlah Tindakan')->default(function ($record) {
-                    return count($record->id_tindakan);
-                }),
+                TextColumn::make('id_transaksi')->label('ID Transaksi'),
+                TextColumn::make('id_registrasi')->label('Registrasi')
+                    ->url(fn($record) => TrRegistrasiResource::getUrl('view', ['record' => $record->id_registrasi]))
+                    ->openUrlInNewTab(),
+                TextColumn::make('id_tindakan')->label('Tindakan')
+                    ->wrap(),
+                TextColumn::make('id_pegawai')->label('Pegawai'),
                 TextColumn::make('created_at')->label('Tanggal Dibuat'),
-                TextColumn::make('updated_at')->label('Tanggal Diubah'),
             ])
             ->filters([
                 //

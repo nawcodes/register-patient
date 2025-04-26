@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('id_pegawai');
             $table->string('id_ruang_pelayanan');
             $table->string('nomor_kartu_asuransi')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
 
 

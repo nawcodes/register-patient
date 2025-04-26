@@ -9,6 +9,7 @@ use Filament\Resources\Pages\ListRecords;
 class ListTrRegistrasis extends ListRecords
 {
     protected static string $resource = TrRegistrasiResource::class;
+    protected static ?string $title = 'Daftar Registrasi';
 
     protected function getHeaderActions(): array
     {

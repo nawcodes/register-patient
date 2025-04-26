@@ -8,6 +8,7 @@ use App\Models\MsTindakan;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -30,11 +31,18 @@ class MsTindakanResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('id_tindakan')
+                    ->label('ID Tindakan')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_tindakan')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('tarif_tindakan')
+                    ->mask(RawJs::make('$money($input)'))
+                    ->stripCharacters(',')
+                    ->numeric()
+                    ->required()
+                    ->prefix('Rp'),
             ]);
     }
 
@@ -46,6 +54,8 @@ class MsTindakanResource extends Resource
             ->columns([
                 TextColumn::make('id_tindakan')->label('ID Tindakan'),
                 TextColumn::make('nama_tindakan')->label('Nama Tindakan'),
+                TextColumn::make('tarif_tindakan')->label('Tarif Tindakan')
+                    ->money('IDR'),
                 TextColumn::make('created_at')->label('Tanggal Dibuat'),
                 TextColumn::make('updated_at')->label('Tanggal Diubah'),
             ])

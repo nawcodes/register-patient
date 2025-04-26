@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMsRuangPelayanan extends CreateRecord
 {
     protected static string $resource = MsRuangPelayananResource::class;
+    protected static ?string $title = 'Tambah Ruang Pelayanan';
 }

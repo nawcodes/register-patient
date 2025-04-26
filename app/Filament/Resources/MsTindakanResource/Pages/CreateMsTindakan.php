@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMsTindakan extends CreateRecord
 {
     protected static string $resource = MsTindakanResource::class;
+    protected static ?string $title = 'Tambah Tindakan';
 }

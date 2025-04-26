@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMsPasien extends CreateRecord
 {
     protected static string $resource = MsPasienResource::class;
+    protected static ?string $title = 'Tambah Pasien';
 }

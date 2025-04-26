@@ -9,11 +9,14 @@ use Filament\Resources\Pages\ListRecords;
 class ListMsTindakans extends ListRecords
 {
     protected static string $resource = MsTindakanResource::class;
+    protected static ?string $title = 'Daftar Tindakan';
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Tindakan')
+                ->icon('heroicon-o-plus'),
         ];
     }
 }

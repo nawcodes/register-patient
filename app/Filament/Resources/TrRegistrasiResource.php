@@ -4,6 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TrRegistrasiResource\Pages;
 use App\Filament\Resources\TrRegistrasiResource\RelationManagers;
+use App\Models\MsAsuransi;
+use App\Models\MsPasien;
+use App\Models\MsPegawai;
+use App\Models\MsRuangPelayanan;
 use App\Models\TrRegistrasi;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -30,20 +34,32 @@ class TrRegistrasiResource extends Resource
             ->schema([
                 Forms\Components\DatePicker::make('tgl_registrasi'),
                 Forms\Components\TextInput::make('nomor_kartu_asuransi')
-                    ->required(),
+                    ->label('Nomor Kartu Asuransi')
+                    ->nullable(),
                 Forms\Components\Select::make('mr_pasien')
-                    ->relationship('pasien', 'nama')
+                    ->label('Pasien')
+                    ->options(MsPasien::all()->pluck('nama', 'mr_pasien'))
+                    ->searchable()
                     ->required(),
                 Forms\Components\Select::make('id_asuransi')
-                    ->relationship('asuransi', 'nama_asuransi')
-                    ->required(),
+                    ->label('Asuransi')
+                    ->options(MsAsuransi::all()->pluck('nama_asuransi', 'id_asuransi'))
+                    ->searchable()
+                    ->nullable(),
                 Forms\Components\Select::make('id_pegawai')
-                    ->relationship('pegawai', 'nama_pegawai')
+                    ->label('Pegawai')
+                    ->options(MsPegawai::all()->pluck('nama_pegawai', 'id_pegawai'))
+                    ->searchable()
                     ->required(),
                 Forms\Components\Select::make('id_ruang_pelayanan')
-                    ->relationship('ruangPelayanan', 'nama_ruang_pelayanan')
+                    ->label('Ruang Pelayanan')
+                    ->options(MsRuangPelayanan::all()->pluck('nama_ruang_pelayanan', 'id_ruang_pelayanan'))
+                    ->searchable()
                     ->required(),
 
+                Forms\Components\Textarea::make('keterangan')
+                    ->label('Keterangan')
+                    ->nullable(),
             ]);
     }
 
@@ -56,11 +72,22 @@ class TrRegistrasiResource extends Resource
                 TextColumn::make('id_registrasi')->label('ID Registrasi'),
                 TextColumn::make('tgl_registrasi')->label('Tanggal Registrasi'),
                 TextColumn::make('pasien.nama')->label('Pasien'),
-                TextColumn::make('asuransi.nama_asuransi')->label('Asuransi'),
+                TextColumn::make('asuransi.nama_asuransi')->label('Asuransi')->default('-'),
                 TextColumn::make('pegawai.nama_pegawai')->label('Pegawai'),
                 TextColumn::make('ruangPelayanan.nama_ruang_pelayanan')->label('Ruang Pelayanan'),
-                TextColumn::make('created_at')->label('Tanggal Dibuat'),
-                // TextColumn::make('updated_at')->label('Tanggal Diubah'),
+                // id transaksi if has
+                // url
+                TextColumn::make('transaksi.id_transaksi')->label('ID Transaksi')
+                    ->url(
+                        function ($record) {
+                            // check if nullable dont create a link
+                            if ($record->transaksi) {
+                                return TrTransaksiResource::getUrl('view', ['record' => $record->transaksi->id_transaksi]);
+                            }
+                        }
+                    )
+                    ->default('Belum Ada Transaksi')
+                    ->openUrlInNewTab(),
             ])
             ->filters([
                 //

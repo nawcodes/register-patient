@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMsPegawai extends CreateRecord
 {
     protected static string $resource = MsPegawaiResource::class;
+    protected static ?string $title = 'Tambah Pegawai';
 }

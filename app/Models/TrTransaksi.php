@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 
 class TrTransaksi extends Model
 {
@@ -13,6 +15,15 @@ class TrTransaksi extends Model
     protected $casts = [
         'id_tindakan' => 'array',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if (empty($model->id_transaksi)) {
+                $model->id_transaksi = 'TRX-' . strtoupper(Str::random(6));
+            }
+        });
+    }
 
     public function registrasi()
     {

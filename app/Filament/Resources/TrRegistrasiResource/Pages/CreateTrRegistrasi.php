@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateTrRegistrasi extends CreateRecord
 {
     protected static string $resource = TrRegistrasiResource::class;
+    protected static ?string $title = 'Tambah Registrasi';
 }
