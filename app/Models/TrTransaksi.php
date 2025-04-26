@@ -39,4 +39,9 @@ class TrTransaksi extends Model
     {
         return $this->belongsTo(MsPegawai::class, 'id_pegawai', 'id_pegawai');
     }
+
+    public function getPasienAttribute()
+    {
+        return $this->registrasi->pasien;
+    }
 }

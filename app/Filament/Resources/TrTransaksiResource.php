@@ -9,8 +9,13 @@ use App\Models\MsTindakan;
 use App\Models\TrRegistrasi;
 use App\Models\TrTransaksi;
 use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
+use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -35,18 +40,48 @@ class TrTransaksiResource extends Resource
                     ->label('Registrasi')
                     ->options(TrRegistrasi::all()->pluck('id_registrasi', 'id_registrasi'))
                     ->searchable()
+                    ->live()
                     ->required(),
+
                 Forms\Components\Select::make('id_tindakan')
                     ->label('Tindakan')
                     ->options(MsTindakan::all()->pluck('nama_tindakan', 'id_tindakan'))
                     ->searchable()
                     ->multiple()
-                    ->required(),
+                    ->required()
+                    ->live(),
                 Forms\Components\Select::make('id_pegawai')
                     ->label('Pegawai')
                     ->options(MsPegawai::all()->pluck('nama_pegawai', 'id_pegawai'))
                     ->searchable()
                     ->required(),
+
+                Forms\Components\Select::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'cancelled' => 'Cancelled',
+                    ])
+                    ->required(),
+                Section::make('Detail Tindakan')
+                    ->schema([
+                        Placeholder::make('')
+                            ->content(function (Get $get) {
+                                // get registrasi by id_registrasi
+                                $registrasi = TrRegistrasi::find($get('id_registrasi'));
+                                // get tindakan by id_tindakan
+                                $tindakan = MsTindakan::find($get('id_tindakan'));
+                                return view('components.transactions.invoice-info', ['data' => $tindakan, 'registrasi' => $registrasi]);
+                            })
+                    ])
+                    ->visible(function (Get $get) {
+                        // if id_registrasi and id_tindakan is not empty
+                        if ($get('id_registrasi') != "" && count($get('id_tindakan')) > 0) {
+                            return true;
+                        }
+                        return false;
+                    }),
                 //
             ]);
     }
@@ -55,14 +90,29 @@ class TrTransaksiResource extends Resource
     {
         return $table
             ->defaultSort('created_at', 'desc')
+            ->searchable()
             ->columns([
-                TextColumn::make('id_transaksi')->label('ID Transaksi'),
+                TextColumn::make('id_transaksi')->label('ID Transaksi')
+                    ->searchable(),
                 TextColumn::make('id_registrasi')->label('Registrasi')
                     ->url(fn($record) => TrRegistrasiResource::getUrl('view', ['record' => $record->id_registrasi]))
-                    ->openUrlInNewTab(),
+                    ->openUrlInNewTab()
+                    ->searchable(),
                 TextColumn::make('id_tindakan')->label('Tindakan')
-                    ->wrap(),
-                TextColumn::make('id_pegawai')->label('Pegawai'),
+                    ->wrap()
+                    ->searchable(),
+                TextColumn::make('total_harga')->label('Total Harga')
+                    ->money('IDR'),
+                TextColumn::make('status')->label('Status')
+                    ->badge()
+                    ->color(fn($state) => match ($state) {
+                        'pending' => 'warning',
+                        'paid' => 'success',
+                        'cancelled' => 'danger',
+                    }),
+                TextColumn::make('id_pegawai')->label('Pegawai')
+                    ->url(fn($record) => MsPegawaiResource::getUrl('view', ['record' => $record->id_pegawai]))
+                    ->openUrlInNewTab(),
                 TextColumn::make('created_at')->label('Tanggal Dibuat'),
             ])
             ->filters([
@@ -72,6 +122,18 @@ class TrTransaksiResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                // mark as paid
+                Tables\Actions\Action::make('markAsPaid')
+                    ->requiresConfirmation()
+                    ->label('Tandai Sebagai Lunas')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->action(function ($record) {
+                        $record->status = 'paid';
+                        $record->save();
+                    })->visible(function ($record) {
+                        return $record->status == 'pending';
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -9,6 +9,7 @@ use Filament\Resources\Pages\ListRecords;
 class ListTrTransaksis extends ListRecords
 {
     protected static string $resource = TrTransaksiResource::class;
+    protected static ?string $title = 'Daftar Transaksi';
 
     protected function getHeaderActions(): array
     {

@@ -17,6 +17,9 @@ return new class extends Migration
             // id tindakan as array cause has multiple tindakan
             $table->json('id_tindakan');
             $table->string('id_pegawai');
+            $table->decimal('total_harga', 15, 2);
+            $table->enum('status', ['pending', 'paid', 'cancelled'])->default('pending');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
 
             $table->foreign('id_registrasi')->references('id_registrasi')->on('tr_registrasi');

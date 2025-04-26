@@ -37,6 +37,9 @@ class TransaksiSeed extends Seeder
                 'id_registrasi' => TrRegistrasi::all()->random()->id_registrasi,
                 'id_tindakan' => $id_tindakan[array_rand($id_tindakan)],
                 'id_pegawai' => MsPegawai::all()->random()->id_pegawai,
+                'total_harga' => $faker->randomFloat(2, 50000, 500000),
+                'status' => 'pending',
+                'keterangan' => $faker->sentence,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
