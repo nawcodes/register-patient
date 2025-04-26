@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             RuangPelayananSeeder::class,
             TindakanSeeder::class,
             RegisterSeeder::class,
+            TransaksiSeed::class,
         ]);
     }
 }

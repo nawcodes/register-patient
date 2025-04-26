@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('tr_transaksi', function (Blueprint $table) {
             $table->id('id_transaksi');
             $table->unsignedBigInteger('id_registrasi');
-            $table->string('id_tindakan');
+            // id tindakan as array cause has multiple tindakan
+            $table->json('id_tindakan');
             $table->string('id_pegawai');
-            $table->integer('jml_tindakan')->default(1);
             $table->timestamps();
 
             $table->foreign('id_registrasi')->references('id_registrasi')->on('tr_registrasi');
-            $table->foreign('id_tindakan')->references('id_tindakan')->on('ms_tindakan');
             $table->foreign('id_pegawai')->references('id_pegawai')->on('ms_pegawai');
         });
     }
