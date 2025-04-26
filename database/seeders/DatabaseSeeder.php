@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             PegawaiSeeder::class,
             RuangPelayananSeeder::class,
             TindakanSeeder::class,
+            RegisterSeeder::class,
         ]);
     }
 }

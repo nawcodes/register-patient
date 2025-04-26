@@ -32,16 +32,16 @@ class TrRegistrasiResource extends Resource
                 Forms\Components\TextInput::make('nomor_kartu_asuransi')
                     ->required(),
                 Forms\Components\Select::make('mr_pasien')
-                    ->relationship('mr_pasien', 'nama_pasien')
+                    ->relationship('pasien', 'nama')
                     ->required(),
                 Forms\Components\Select::make('id_asuransi')
-                    ->relationship('id_asuransi', 'nama_asuransi')
+                    ->relationship('asuransi', 'nama_asuransi')
                     ->required(),
                 Forms\Components\Select::make('id_pegawai')
-                    ->relationship('id_pegawai', 'nama_pegawai')
+                    ->relationship('pegawai', 'nama_pegawai')
                     ->required(),
                 Forms\Components\Select::make('id_ruang_pelayanan')
-                    ->relationship('id_ruang_pelayanan', 'nama_ruang_pelayanan')
+                    ->relationship('ruangPelayanan', 'nama_ruang_pelayanan')
                     ->required(),
 
             ]);
@@ -55,10 +55,10 @@ class TrRegistrasiResource extends Resource
             ->columns([
                 TextColumn::make('id_registrasi')->label('ID Registrasi'),
                 TextColumn::make('tgl_registrasi')->label('Tanggal Registrasi'),
-                TextColumn::make('mr_pasien')->label('Pasien'),
-                TextColumn::make('id_asuransi')->label('Asuransi'),
-                TextColumn::make('id_pegawai')->label('Pegawai'),
-                TextColumn::make('id_ruang_pelayanan')->label('Ruang Pelayanan'),
+                TextColumn::make('pasien.nama')->label('Pasien'),
+                TextColumn::make('asuransi.nama_asuransi')->label('Asuransi'),
+                TextColumn::make('pegawai.nama_pegawai')->label('Pegawai'),
+                TextColumn::make('ruangPelayanan.nama_ruang_pelayanan')->label('Ruang Pelayanan'),
                 TextColumn::make('created_at')->label('Tanggal Dibuat'),
                 // TextColumn::make('updated_at')->label('Tanggal Diubah'),
             ])
