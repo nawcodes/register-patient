@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tr_pembayaran', function (Blueprint $table) {
             $table->id('id_pembayaran');
-            $table->unsignedBigInteger('id_registrasi');
+            $table->string('id_registrasi');
             $table->date('tgl_pembayaran');
             $table->decimal('total_tagihan', 12, 2);
             $table->decimal('jumlah_bayar', 12, 2);

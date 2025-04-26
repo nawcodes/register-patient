@@ -33,6 +33,7 @@ class TransaksiSeed extends Seeder
 
         foreach (range(1, 10) as $i) {
             TrTransaksi::create([
+                'id_transaksi' => 'TRX-' . $faker->unique()->randomNumber(8),
                 'id_registrasi' => TrRegistrasi::all()->random()->id_registrasi,
                 'id_tindakan' => $id_tindakan[array_rand($id_tindakan)],
                 'id_pegawai' => MsPegawai::all()->random()->id_pegawai,

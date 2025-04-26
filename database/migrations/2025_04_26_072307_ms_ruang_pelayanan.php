@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('ms_ruang_pelayanan', function (Blueprint $table) {
             $table->string('id_ruang_pelayanan')->primary();
             $table->string('nama_ruang_pelayanan');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

@@ -8,6 +8,5 @@ class MsAsuransi extends Model
 {
     protected $table = 'ms_asuransi';
     protected $primaryKey = 'id_asuransi';
-    protected $keyType = 'string';
     protected $guarded = [];
 }

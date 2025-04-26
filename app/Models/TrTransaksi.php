@@ -8,6 +8,7 @@ class TrTransaksi extends Model
 {
     protected $table = 'tr_transaksi';
     protected $primaryKey = 'id_transaksi';
+    protected $keyType = 'string';
     protected $guarded = [];
     protected $casts = [
         'id_tindakan' => 'array',

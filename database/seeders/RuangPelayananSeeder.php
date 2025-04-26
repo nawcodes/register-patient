@@ -19,6 +19,7 @@ class RuangPelayananSeeder extends Seeder
             DB::table('ms_ruang_pelayanan')->insert([
                 'id_ruang_pelayanan' => 'RPL-' . $faker->unique()->randomNumber(8),
                 'nama_ruang_pelayanan' => 'Ruang ' . $faker->word,
+                'keterangan' => $faker->sentence,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

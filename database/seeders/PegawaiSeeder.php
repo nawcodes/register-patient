@@ -19,6 +19,10 @@ class PegawaiSeeder extends Seeder
             DB::table('ms_pegawai')->insert([
                 'id_pegawai' => 'PGW-' . $faker->unique()->randomNumber(8),
                 'nama_pegawai' => $faker->name,
+                'no_hp' => $faker->phoneNumber,
+                'email' => $faker->email,
+                'alamat' => $faker->address,
+                'jabatan' => $faker->jobTitle,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

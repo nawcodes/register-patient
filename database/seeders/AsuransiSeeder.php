@@ -17,8 +17,8 @@ class AsuransiSeeder extends Seeder
 
         foreach (range(1, 10) as $i) {
             DB::table('ms_asuransi')->insert([
-                'id_asuransi' => 'ASUR-' . $faker->unique()->randomNumber(8),
                 'nama_asuransi' => 'Asuransi ' . $faker->word,
+                'keterangan' => $faker->sentence,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

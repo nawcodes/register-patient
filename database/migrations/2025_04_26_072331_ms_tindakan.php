@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('id_tindakan')->primary();
             $table->string('nama_tindakan');
             $table->decimal('tarif_tindakan', 12, 2);
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ class TrRegistrasi extends Model
 {
     protected $table = 'tr_registrasi';
     protected $primaryKey = 'id_registrasi';
+    protected $keyType = 'string';
     protected $guarded = [];
 
     public function pasien()

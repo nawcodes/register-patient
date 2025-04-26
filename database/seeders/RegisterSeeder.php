@@ -21,6 +21,7 @@ class RegisterSeeder extends Seeder
 
         for ($i = 0; $i < 10; $i++) {
             TrRegistrasi::create([
+                'id_registrasi' => 'REG-' . $faker->unique()->randomNumber(8),
                 'tgl_registrasi' => $faker->date(),
                 'mr_pasien' => MsPasien::all()->random()->mr_pasien,
                 'id_asuransi' => MsAsuransi::all()->random()->id_asuransi,

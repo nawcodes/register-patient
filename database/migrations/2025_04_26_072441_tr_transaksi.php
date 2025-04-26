@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tr_transaksi', function (Blueprint $table) {
-            $table->id('id_transaksi');
-            $table->unsignedBigInteger('id_registrasi');
+            $table->string('id_transaksi')->primary();
+            $table->string('id_registrasi');
             // id tindakan as array cause has multiple tindakan
             $table->json('id_tindakan');
             $table->string('id_pegawai');
