@@ -15,17 +15,21 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Pasien', TrRegistrasi::count())
-                ->description(new HtmlString('<a class="underline" href="' . TrRegistrasiResource::getUrl('index') . '">Lihat Semua Pasien</a>')),
+            // total pasien hari ini, deskripsi jumlah keseluruhan pasien dengan link ke halaman pasien
+            Stat::make('Total Pasien Hari Ini', TrRegistrasi::whereDate('tgl_registrasi', now()->toDateString())->count())
+                ->description(new HtmlString(
+                    'Jumlah keseluruhan ' . TrRegistrasi::count() . ' pasien'
+                        . '<br/><a class="underline" href="' . TrRegistrasiResource::getUrl('index') . '"> Lihat Semua Pasien</a>'
+                )),
 
-            // section 2
-            //
-            Stat::make('Total Tagihan', 'Rp ' . number_format(TrTransaksi::sum('total_harga'), 0, ',', '.'))
-                ->description(new HtmlString('<a class="underline" href="' . TrTransaksiResource::getUrl('index') . '">Lihat Semua Tagihan</a>')),
+            // total tagihan, deskripsi jumlah keseluruhan tagihan dengan link ke halaman tagihan
+            Stat::make('Total Pendapatan Hari Ini', 'Rp ' . number_format(TrTransaksi::whereDate('created_at', now()->toDateString())->where('status', 'paid')->sum('total_harga'), 0, ',', '.'))
+                ->description(new HtmlString(
+                    'Jumlah keseluruhan <strong>Rp.' . number_format(TrTransaksi::where('status', 'paid')->sum('total_harga'), 0, ',', '.') . '</strong> tagihan'
+                        . '<br/><a class="underline" href="' . TrTransaksiResource::getUrl('index') . '"> Lihat Semua Tagihan</a>'
+                )),
 
-            // Registrasi yang belum ada transaksi
-            Stat::make('Total Pasien Belum Ada Transaksi', TrRegistrasi::whereDoesntHave('transaksi')->count())
-                ->description(new HtmlString('<a class="underline" href="' . TrRegistrasiResource::getUrl('index') . '">Lihat Semua Pasien Belum Ada Transaksi</a>')),
+
 
         ];
     }
