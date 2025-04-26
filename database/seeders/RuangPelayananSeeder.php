@@ -17,6 +17,7 @@ class RuangPelayananSeeder extends Seeder
 
         foreach (range(1, 10) as $i) {
             DB::table('ms_ruang_pelayanan')->insert([
+                'id_ruang_pelayanan' => 'RPL-' . $faker->unique()->randomNumber(8),
                 'nama_ruang_pelayanan' => 'Ruang ' . $faker->word,
                 'created_at' => now(),
                 'updated_at' => now(),

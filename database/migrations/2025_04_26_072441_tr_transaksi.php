@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tr_transaksi', function (Blueprint $table) {
             $table->id('id_transaksi');
             $table->unsignedBigInteger('id_registrasi');
-            $table->unsignedBigInteger('id_tindakan');
-            $table->unsignedBigInteger('id_pegawai');
+            $table->string('id_tindakan');
+            $table->string('id_pegawai');
             $table->integer('jml_tindakan')->default(1);
             $table->timestamps();
 

@@ -17,6 +17,7 @@ class PegawaiSeeder extends Seeder
 
         foreach (range(1, 10) as $i) {
             DB::table('ms_pegawai')->insert([
+                'id_pegawai' => 'PGW-' . $faker->unique()->randomNumber(8),
                 'nama_pegawai' => $faker->name,
                 'created_at' => now(),
                 'updated_at' => now(),

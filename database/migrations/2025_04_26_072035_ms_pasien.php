@@ -15,6 +15,10 @@ return new class extends Migration
         Schema::create('ms_pasien', function (Blueprint $table) {
             $table->id('mr_pasien');
             $table->string('nama');
+            $table->string('nik')->unique();
+            $table->string('no_hp');
+            $table->string('alamat');
+            $table->string('email');
             $table->date('tgl_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->timestamps();

@@ -18,6 +18,10 @@ class PasienSeeder extends Seeder
         foreach (range(1, 10) as $i) {
             DB::table('ms_pasien')->insert([
                 'nama' => $faker->name,
+                'nik' => $faker->unique()->randomNumber(8),
+                'no_hp' => $faker->phoneNumber,
+                'alamat' => $faker->address,
+                'email' => $faker->email,
                 'tgl_lahir' => $faker->date('Y-m-d', '-18 years'), // minimal 18 tahun
                 'jenis_kelamin' => $faker->randomElement(['L', 'P']),
                 'created_at' => now(),

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ms_tindakan', function (Blueprint $table) {
-            $table->id('id_tindakan');
+            $table->string('id_tindakan')->primary();
             $table->string('nama_tindakan');
             $table->decimal('tarif_tindakan', 12, 2);
             $table->timestamps();
