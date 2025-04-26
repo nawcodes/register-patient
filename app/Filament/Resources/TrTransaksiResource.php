@@ -18,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Support\RawJs;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -93,30 +94,42 @@ class TrTransaksiResource extends Resource
             ->searchable()
             ->columns([
                 TextColumn::make('id_transaksi')->label('ID Transaksi')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('id_registrasi')->label('Registrasi')
                     ->url(fn($record) => TrRegistrasiResource::getUrl('view', ['record' => $record->id_registrasi]))
                     ->openUrlInNewTab()
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('id_tindakan')->label('Tindakan')
                     ->wrap()
                     ->searchable(),
                 TextColumn::make('total_harga')->label('Total Harga')
-                    ->money('IDR'),
+                    ->money('IDR')
+                    ->sortable(),
                 TextColumn::make('status')->label('Status')
                     ->badge()
                     ->color(fn($state) => match ($state) {
                         'pending' => 'warning',
                         'paid' => 'success',
                         'cancelled' => 'danger',
-                    }),
+                    })
+                    ->sortable(),
                 TextColumn::make('id_pegawai')->label('Pegawai')
                     ->url(fn($record) => MsPegawaiResource::getUrl('view', ['record' => $record->id_pegawai]))
-                    ->openUrlInNewTab(),
-                TextColumn::make('created_at')->label('Tanggal Dibuat'),
+                    ->openUrlInNewTab()
+                    ->sortable(),
+                TextColumn::make('created_at')->label('Tanggal Dibuat')
+                    ->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'cancelled' => 'Cancelled',
+                    ])
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

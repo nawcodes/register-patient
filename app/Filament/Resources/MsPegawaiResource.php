@@ -45,10 +45,10 @@ class MsPegawaiResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->searchable()
             ->columns([
-                TextColumn::make('id_pegawai')->label('ID Pegawai'),
-                TextColumn::make('nama_pegawai')->label('Nama Pegawai'),
-                TextColumn::make('created_at')->label('Tanggal Dibuat'),
-                TextColumn::make('updated_at')->label('Tanggal Diubah'),
+                TextColumn::make('id_pegawai')->label('ID Pegawai')->sortable()->searchable(),
+                TextColumn::make('nama_pegawai')->label('Nama Pegawai')->sortable()->searchable(),
+                TextColumn::make('created_at')->label('Tanggal Dibuat')->sortable()->searchable(),
+                TextColumn::make('updated_at')->label('Tanggal Diubah')->sortable()->searchable(),
             ])
             ->filters([
                 //

@@ -52,12 +52,13 @@ class MsTindakanResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->searchable()
             ->columns([
-                TextColumn::make('id_tindakan')->label('ID Tindakan'),
-                TextColumn::make('nama_tindakan')->label('Nama Tindakan'),
+                TextColumn::make('id_tindakan')->label('ID Tindakan')->sortable()->searchable(),
+                TextColumn::make('nama_tindakan')->label('Nama Tindakan')->sortable()->searchable(),
                 TextColumn::make('tarif_tindakan')->label('Tarif Tindakan')
-                    ->money('IDR'),
-                TextColumn::make('created_at')->label('Tanggal Dibuat'),
-                TextColumn::make('updated_at')->label('Tanggal Diubah'),
+                    ->money('IDR')
+                    ->sortable(),
+                TextColumn::make('created_at')->label('Tanggal Dibuat')->sortable()->searchable(),
+                TextColumn::make('updated_at')->label('Tanggal Diubah')->sortable()->searchable(),
             ])
             ->filters([
                 //

@@ -14,6 +14,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -69,12 +70,12 @@ class TrRegistrasiResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->searchable()
             ->columns([
-                TextColumn::make('id_registrasi')->label('ID Registrasi'),
-                TextColumn::make('tgl_registrasi')->label('Tanggal Registrasi'),
-                TextColumn::make('pasien.nama')->label('Pasien'),
-                TextColumn::make('asuransi.nama_asuransi')->label('Asuransi')->default('-'),
-                TextColumn::make('pegawai.nama_pegawai')->label('Pegawai'),
-                TextColumn::make('ruangPelayanan.nama_ruang_pelayanan')->label('Ruang Pelayanan'),
+                TextColumn::make('id_registrasi')->label('ID Registrasi')->sortable()->searchable(),
+                TextColumn::make('tgl_registrasi')->label('Tanggal Registrasi')->sortable()->searchable(),
+                TextColumn::make('pasien.nama')->label('Pasien')->sortable()->searchable(),
+                TextColumn::make('asuransi.nama_asuransi')->label('Asuransi')->default('-')->sortable()->searchable(),
+                TextColumn::make('pegawai.nama_pegawai')->label('Pegawai')->sortable()->searchable(),
+                TextColumn::make('ruangPelayanan.nama_ruang_pelayanan')->label('Ruang Pelayanan')->sortable()->searchable(),
                 // id transaksi if has
                 // url
                 TextColumn::make('transaksi.id_transaksi')->label('ID Transaksi')
@@ -89,9 +90,7 @@ class TrRegistrasiResource extends Resource
                     ->default('Belum Ada Transaksi')
                     ->openUrlInNewTab(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),

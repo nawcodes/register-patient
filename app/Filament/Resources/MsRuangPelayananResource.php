@@ -44,10 +44,10 @@ class MsRuangPelayananResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->searchable()
             ->columns([
-                TextColumn::make('id_ruang_pelayanan')->label('ID Ruang Pelayanan'),
-                TextColumn::make('nama_ruang_pelayanan')->label('Nama Ruang Pelayanan'),
-                TextColumn::make('created_at')->label('Tanggal Dibuat'),
-                TextColumn::make('updated_at')->label('Tanggal Diubah'),
+                TextColumn::make('id_ruang_pelayanan')->label('ID Ruang Pelayanan')->sortable()->searchable(),
+                TextColumn::make('nama_ruang_pelayanan')->label('Nama Ruang Pelayanan')->sortable()->searchable(),
+                TextColumn::make('created_at')->label('Tanggal Dibuat')->sortable()->searchable(),
+                TextColumn::make('updated_at')->label('Tanggal Diubah')->sortable()->searchable(),
             ])
             ->filters([
                 //

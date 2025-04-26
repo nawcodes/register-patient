@@ -44,10 +44,9 @@ class MsAsuransiResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->searchable()
             ->columns([
-                TextColumn::make('id_asuransi')->label('ID Asuransi'),
-                TextColumn::make('nama_asuransi')->label('Nama Asuransi'),
-                TextColumn::make('created_at')->label('Tanggal Dibuat'),
-                TextColumn::make('updated_at')->label('Tanggal Diubah'),
+                TextColumn::make('nama_asuransi')->label('Nama Asuransi')->sortable()->searchable(),
+                TextColumn::make('created_at')->label('Tanggal Dibuat')->sortable()->searchable(),
+                TextColumn::make('updated_at')->label('Tanggal Diubah')->sortable()->searchable(),
             ])
             ->filters([
                 //

@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -60,14 +61,18 @@ class MsPasienResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->searchable()
             ->columns([
-                TextColumn::make('nik')->label('NIK')->default('-'),
-                TextColumn::make('nama')->label('Nama Pasien'),
-                TextColumn::make('jenis_kelamin')->label('Jenis Kelamin'),
-                TextColumn::make('created_at')->label('Tanggal Dibuat'),
-                TextColumn::make('updated_at')->label('Tanggal Diubah'),
+                TextColumn::make('nik')->label('NIK')->default('-')->sortable()->searchable(),
+                TextColumn::make('nama')->label('Nama Pasien')->sortable()->searchable(),
+                TextColumn::make('jenis_kelamin')->label('Jenis Kelamin')->sortable()->searchable(),
+                TextColumn::make('created_at')->label('Tanggal Dibuat')->sortable()->searchable(),
+                TextColumn::make('updated_at')->label('Tanggal Diubah')->sortable()->searchable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('jenis_kelamin')
+                    ->options([
+                        'L' => 'Laki-Laki',
+                        'P' => 'Perempuan',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
