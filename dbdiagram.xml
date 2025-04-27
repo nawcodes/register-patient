@@ -1,0 +1,86 @@
+Table ms_pasien {
+  mr_pasien bigint [pk, increment]
+  nama varchar
+  nik varchar [unique]
+  no_hp varchar
+  alamat varchar
+  email varchar
+  tgl_lahir date
+  jenis_kelamin enum('L', 'P')
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+
+Table ms_asuransi {
+  id_asuransi bigint [pk, increment]
+  nama_asuransi varchar
+  keterangan varchar [note: 'nullable']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table ms_pegawai {
+  id_pegawai bigint [pk, increment]
+  nama_pegawai varchar
+  jabatan varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table ms_ruang_pelayanan {
+  id_ruang_pelayanan varchar [pk]
+  nama_ruang_pelayanan varchar
+  keterangan varchar [note: 'nullable']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table ms_tindakan {
+  id_tindakan varchar [pk]
+  nama_tindakan varchar
+  tarif_tindakan decimal(12,2)
+  keterangan varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref:  tr_registrasi.mr_pasien > ms_pasien.mr_pasien
+Ref: tr_registrasi.id_asuransi > ms_asuransi.id_asuransi
+Ref: tr_registrasi.id_pegawai > ms_pegawai.id_pegawai
+Ref: tr_registrasi.id_ruang_pelayanan > ms_ruang_pelayanan.id_ruang_pelayanan
+
+Table tr_registrasi {
+  id_registrasi varchar [pk]
+  tgl_registrasi date
+  mr_pasien bigint
+  id_asuransi bigint
+  id_pegawai varchar
+  id_ruang_pelayanan varchar
+  nomor_kartu_asuransi varchar
+  keterangan text
+  created_at timestamp
+  updated_at timestamp
+
+
+}
+
+
+Ref: tr_transaksi.id_registrasi > tr_registrasi.id_registrasi
+Ref: tr_transaksi.id_pegawai > ms_pegawai.id_pegawai
+Table tr_transaksi {
+
+  id_transaksi varchar [pk]
+  id_registrasi varchar
+  id_tindakan json
+  id_pegawai varchar
+  total_harga decimal(15,2)
+  status enum('pending', 'paid', 'cancelled')
+  keterangan varchar
+  created_at timestamp
+  updated_at timestamp
+
+
+}
+
