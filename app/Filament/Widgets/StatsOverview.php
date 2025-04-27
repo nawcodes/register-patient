@@ -21,6 +21,13 @@ class StatsOverview extends BaseWidget
                     'Jumlah keseluruhan ' . TrRegistrasi::count() . ' pasien'
                         . '<br/><a class="underline" href="' . TrRegistrasiResource::getUrl('index') . '"> Lihat Semua Pasien</a>'
                 )),
+            // total pasien bulan ini, deskripsi jumlah keseluruhan pasien dengan link ke halaman pasien
+            Stat::make('Total Pasien Bulan Ini', TrRegistrasi::whereMonth('tgl_registrasi', now()->month)->count())
+                ->description(new HtmlString(
+                    // ini bulan lalu
+                    'Jumlah keseluruhan ' . TrRegistrasi::whereMonth('tgl_registrasi', now()->subMonth()->month)->count() . ' pasien bulan lalu'
+                        . '<br/><a class="underline" href="' . TrRegistrasiResource::getUrl('index') . '"> Lihat Semua Pasien</a>'
+                )),
 
             // total tagihan, deskripsi jumlah keseluruhan tagihan dengan link ke halaman tagihan
             Stat::make('Total Pendapatan Hari Ini', 'Rp ' . number_format(TrTransaksi::whereDate('created_at', now()->toDateString())->where('status', 'paid')->sum('total_harga'), 0, ',', '.'))
@@ -29,8 +36,13 @@ class StatsOverview extends BaseWidget
                         . '<br/><a class="underline" href="' . TrTransaksiResource::getUrl('index') . '"> Lihat Semua Tagihan</a>'
                 )),
 
-
-
+            // total tagihan bulan ini, deskripsi jumlah keseluruhan tagihan dengan link ke halaman tagihan
+            Stat::make('Total Pendapatan Bulan Ini', 'Rp ' . number_format(TrTransaksi::whereMonth('created_at', now()->month)->where('status', 'paid')->sum('total_harga'), 0, ',', '.'))
+                ->description(new HtmlString(
+                    // ini bulan lalu
+                    'Jumlah keseluruhan <strong>Rp.' . number_format(TrTransaksi::whereMonth('created_at', now()->subMonth()->month)->where('status', 'paid')->sum('total_harga'), 0, ',', '.') . '</strong> tagihan bulan lalu'
+                        . '<br/><a class="underline" href="' . TrTransaksiResource::getUrl('index') . '"> Lihat Semua Tagihan</a>'
+                )),
         ];
     }
 }

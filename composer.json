@@ -10,6 +10,7 @@
         "filament/filament": "^3.3",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
+        "malzariey/filament-daterangepicker-filter": "^3.3",
         "torgodly/html2media": "^1.1"
     },
     "require-dev": {
