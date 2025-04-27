@@ -39,11 +39,28 @@ class TrTransaksiResource extends Resource
             ->schema([
                 Forms\Components\Select::make('id_registrasi')
                     ->label('Registrasi')
-                    ->options(TrRegistrasi::all()->pluck('id_registrasi', 'id_registrasi'))
+                    ->getSearchResultsUsing(function (string $search) {
+                        return TrRegistrasi::query()
+                            ->whereRaw('LOWER(id_registrasi) like ?', ['%' . strtolower($search) . '%'])
+                            ->limit(50)
+                            ->orderBy('created_at', 'desc')
+                            ->get()
+                            ->mapWithKeys(function ($registrasi) {
+                                return [
+                                    $registrasi->id_registrasi => "{$registrasi->id_registrasi} - {$registrasi->pasien->nama} - {$registrasi->pegawai->nama_pegawai} - {$registrasi->tgl_registrasi}",
+                                ];
+                            })
+                            ->toArray();
+                    })
+                    ->getOptionLabelUsing(function ($value): ?string {
+                        $registrasi = TrRegistrasi::find($value);
+                        return $registrasi
+                            ? "{$registrasi->id_registrasi} - {$registrasi->pasien->nama} - {$registrasi->pegawai->nama_pegawai} - {$registrasi->tgl_registrasi}"
+                            : null;
+                    })
                     ->searchable()
                     ->live()
                     ->required(),
-
                 Forms\Components\Select::make('id_tindakan')
                     ->label('Tindakan')
                     ->options(MsTindakan::all()->pluck('nama_tindakan', 'id_tindakan'))
