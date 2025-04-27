@@ -16,10 +16,10 @@ return new class extends Migration
             $table->id('mr_pasien');
             $table->string('nama');
             $table->string('nik')->unique();
-            $table->string('no_hp');
-            $table->string('alamat');
-            $table->string('email');
-            $table->date('tgl_lahir');
+            $table->string('no_hp')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->date('tgl_lahir')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->timestamps();
         });

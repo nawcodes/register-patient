@@ -32,6 +32,9 @@ class MsTindakanResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id_tindakan')
                     ->label('ID Tindakan')
+                    ->unique(
+                        ignoreRecord: true
+                    )
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_tindakan')
@@ -43,6 +46,8 @@ class MsTindakanResource extends Resource
                     ->numeric()
                     ->required()
                     ->prefix('Rp'),
+                Forms\Components\Textarea::make('keterangan')
+                    ->maxLength(255),
             ]);
     }
 

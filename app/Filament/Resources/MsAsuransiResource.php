@@ -29,11 +29,10 @@ class MsAsuransiResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_asuransi')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('nama_asuransi')
                     ->required()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('keterangan')
                     ->maxLength(255),
             ]);
     }

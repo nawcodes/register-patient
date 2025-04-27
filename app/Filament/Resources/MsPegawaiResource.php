@@ -35,6 +35,17 @@ class MsPegawaiResource extends Resource
                 Forms\Components\TextInput::make('nama_pegawai')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('no_hp')
+                    ->maxLength(15),
+                Forms\Components\TextInput::make('email')
+                    ->unique(
+                        ignoreRecord: true
+                    )
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('alamat')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('jabatan')
+                    ->maxLength(255),
                 //
             ]);
     }

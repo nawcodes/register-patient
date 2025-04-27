@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('ms_pegawai', function (Blueprint $table) {
             $table->string('id_pegawai')->primary();
             $table->string('nama_pegawai');
-            $table->string('no_hp');
-            $table->string('email');
-            $table->string('alamat');
-            $table->string('jabatan');
+            $table->string('no_hp')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('jabatan')->nullable();
             $table->timestamps();
         });
     }

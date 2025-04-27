@@ -33,7 +33,9 @@ class MsPasienResource extends Resource
                 Forms\Components\TextInput::make('nik')
                     ->placeholder('Egs: 1234567890')
                     ->required()
-                    ->unique()
+                    ->unique(
+                        ignoreRecord: true
+                    )
                     ->maxLength(10),
                 Forms\Components\TextInput::make('nama')
                     ->required()
@@ -49,7 +51,9 @@ class MsPasienResource extends Resource
                 Forms\Components\Textarea::make('alamat')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
-                    ->required()
+                    ->unique(
+                        ignoreRecord: true
+                    )
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('tgl_lahir')
             ]);

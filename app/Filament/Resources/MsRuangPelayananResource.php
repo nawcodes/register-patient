@@ -31,9 +31,14 @@ class MsRuangPelayananResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id_ruang_pelayanan')
                     ->required()
+                    ->unique(
+                        ignoreRecord: true
+                    )
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama_ruang_pelayanan')
                     ->required()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('keterangan')
                     ->maxLength(255),
             ]);
     }

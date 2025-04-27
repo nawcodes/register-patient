@@ -43,7 +43,7 @@
         <p><strong>Tanggal Lahir:</strong> {{ \Carbon\Carbon::parse($record->pasien->tgl_lahir)->format('d-m-Y') }}</p>
         <p><strong>Jenis Kelamin:</strong> {{ ucfirst($record->pasien->jenis_kelamin) }}</p>
         <p><strong>No Kartu Asuransi:</strong> {{ $record->registrasi->nomor_kartu_asuransi }}</p>
-        <p><strong>Asuransi:</strong> {{ $record->registrasi->asuransi->nama_asuransi }}</p>
+        <p><strong>Asuransi:</strong> {{ $record->registrasi->asuransi?->nama_asuransi }}</p>
     </div>
 
     <div class="transaction-info">
