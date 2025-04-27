@@ -43,12 +43,22 @@
             </tr>
         </thead>
         <tbody>
+             @php
+                $total_pasien = 0;
+            @endphp
             @foreach ($pasien as $tanggal => $jumlah)
+                @php
+                    $total_pasien += $jumlah;
+                @endphp
                 <tr>
                     <td>{{ $tanggal }}</td>
                     <td>{{ $jumlah }}</td>
                 </tr>
             @endforeach
+            <tr>
+                <td colspan="1">Total Pasien</td>
+                <td>{{ $total_pasien }}</td>
+            </tr>
 
         </tbody>
     </table>

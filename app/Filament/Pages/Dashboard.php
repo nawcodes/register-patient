@@ -58,7 +58,7 @@ class Dashboard extends \Filament\Pages\Dashboard implements HasForms, HasAction
 
     public function printTrendPasienAction(): Action
     {
-        $filtering_date = $this->data['filtering_date'];
+        $original_date = $this->data['filtering_date'];
         if ($this->data['filtering_date']) {
             $filtering_date = explode(' - ', $this->data['filtering_date']);
             $start_date = $filtering_date[0];
@@ -86,11 +86,11 @@ class Dashboard extends \Filament\Pages\Dashboard implements HasForms, HasAction
             ->scale(2)
             ->print() // Enable print option
             ->preview()
-            ->filename(function ($record) use ($filtering_date) {
+            ->filename(function ($record) use ($original_date) {
                 return 'trends-pasien.pdf';
             })
-            ->content(function ($record) use ($data, $filtering_date) {
-                return view('components.pdf.trends-pasien', ['pasien' => $data, 'filtering_date' => $filtering_date]);
+            ->content(function ($record) use ($data, $original_date) {
+                return view('components.pdf.trends-pasien', ['pasien' => $data, 'filtering_date' => $original_date]);
             })
             ->savePdf() // Enable save as PDF option
             ->requiresConfirmation() // Show confirmation modal
@@ -103,7 +103,7 @@ class Dashboard extends \Filament\Pages\Dashboard implements HasForms, HasAction
 
     public function printTrendPendapatanAction(): Action
     {
-        $filtering_date = $this->data['filtering_date'];
+        $original_date = $this->data['filtering_date'];
         if ($this->data['filtering_date']) {
             $filtering_date = explode(' - ', $this->data['filtering_date']);
             $start_date = $filtering_date[0];
@@ -128,11 +128,11 @@ class Dashboard extends \Filament\Pages\Dashboard implements HasForms, HasAction
             ->scale(2)
             ->print()
             ->preview()
-            ->filename(function ($record) use ($filtering_date) {
+            ->filename(function ($record) use ($original_date) {
                 return 'trends-pendapatan.pdf';
             })
-            ->content(function ($record) use ($data, $filtering_date) {
-                return view('components.pdf.trends-pendapatan', ['pendapatans' => $data, 'filtering_date' => $filtering_date]);
+            ->content(function ($record) use ($data, $original_date) {
+                return view('components.pdf.trends-pendapatan', ['pendapatans' => $data, 'filtering_date' => $original_date]);
             })
             ->savePdf() // Enable save as PDF option
             ->requiresConfirmation() // Show confirmation modal
