@@ -90,7 +90,20 @@ class TrRegistrasiResource extends Resource
                     ->default('Belum Ada Transaksi')
                     ->openUrlInNewTab(),
             ])
-            ->filters([])
+            ->filters([
+                SelectFilter::make('id_pegawai')
+                    ->label('Pegawai')
+                    ->options(MsPegawai::all()->pluck('nama_pegawai', 'id_pegawai'))
+                    ->searchable(),
+                SelectFilter::make('id_asuransi')
+                    ->label('Asuransi')
+                    ->options(MsAsuransi::all()->pluck('nama_asuransi', 'id_asuransi'))
+                    ->searchable(),
+                SelectFilter::make('id_ruang_pelayanan')
+                    ->label('Ruang Pelayanan')
+                    ->options(MsRuangPelayanan::all()->pluck('nama_ruang_pelayanan', 'id_ruang_pelayanan'))
+                    ->searchable(),
+            ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),

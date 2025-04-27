@@ -22,7 +22,7 @@ class RegisterSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             TrRegistrasi::create([
                 'id_registrasi' => 'REG-' . $faker->unique()->randomNumber(8),
-                'tgl_registrasi' => $faker->date(),
+                'tgl_registrasi' => $faker->dateTimeBetween('-1 month', 'now'),
                 'mr_pasien' => MsPasien::all()->random()->mr_pasien,
                 'id_asuransi' => MsAsuransi::all()->random()->id_asuransi,
                 'id_pegawai' => MsPegawai::all()->random()->id_pegawai,
